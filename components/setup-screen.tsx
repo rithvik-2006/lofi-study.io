@@ -21,7 +21,7 @@ export function SetupScreen({ onStart }: { onStart: (minutes: number) => void })
   const totalMinutes = hours * 60 + minutes;
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background to-background/80">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-transparent">
       {/* Animated background blur */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-pulse" />

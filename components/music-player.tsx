@@ -1,40 +1,52 @@
 'use client';
 
-import { useState } from 'react';
-import { Play, Pause, Volume2, RotateCcw } from 'lucide-react';
+import { Play, Pause, SkipForward } from 'lucide-react';
 
-export function MusicPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(70);
+type Player = {
+  play: () => Promise<void>;
+  pause: () => void;
+  next: () => void;
+  isPlaying: boolean;
+  currentTrack: { title: string; url: string };
+  loadError: string | null;
+};
+
+export function MusicPlayer({ player }: { player?: Player }) {
+  if (!player) return null;
+
+  const { play, pause, next, isPlaying, currentTrack, loadError } = player;
 
   return (
-    <div className="flex items-center justify-center gap-6 bg-card rounded-2xl p-6 backdrop-blur-sm border border-border/50">
-      {/* Play/Pause */}
-      <button
-        onClick={() => setIsPlaying(!isPlaying)}
-        className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110"
-      >
-        {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-0.5" />}
-      </button>
-
-      {/* Volume */}
-      <div className="flex items-center gap-3">
-        <Volume2 size={20} className="text-muted-foreground" />
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={volume}
-          onChange={(e) => setVolume(Number(e.target.value))}
-          className="w-24 h-1 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
-        />
-        <span className="text-sm text-muted-foreground w-8 text-right">{volume}%</span>
+    <div className="flex flex-col items-center gap-4">
+      <div className="flex items-center justify-center gap-4 bg-card rounded-2xl p-6 backdrop-blur-sm border border-border/50">
+        <button
+          onClick={() => (isPlaying ? pause() : play())}
+          className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110"
+          title={isPlaying ? 'Pause' : 'Resume'}
+        >
+          {isPlaying ? (
+            <Pause size={24} />
+          ) : (
+            <Play size={24} className="ml-0.5" />
+          )}
+        </button>
+        <button
+          onClick={next}
+          className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110"
+          title="Next track"
+        >
+          <SkipForward size={20} />
+        </button>
       </div>
-
-      {/* Background control */}
-      <button className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110">
-        <RotateCcw size={20} />
-      </button>
+      {loadError ? (
+        <p className="text-xs text-destructive/90 max-w-xs text-center">
+          {loadError}. Check the URL or try Next.
+        </p>
+      ) : (
+        <p className="text-xs text-muted-foreground/80">
+          Now playing: {currentTrack.title}
+        </p>
+      )}
     </div>
   );
 }
