@@ -22,6 +22,7 @@ export default function Background({
         style={{ opacity: visibleLayer === 0 ? 1 : 0 }}
       >
         <video
+          key={layer0Src}
           autoPlay
           loop
           muted
@@ -48,6 +49,7 @@ export default function Background({
         style={{ opacity: visibleLayer === 1 ? 1 : 0 }}
       >
         <video
+          key={layer1Src}
           autoPlay
           loop
           muted
@@ -86,14 +88,14 @@ export default function Background({
         preserveAspectRatio="xMidYMid slice"
         aria-hidden
       >
-        <filter id="noise-ambience">
+        {/* <filter id="noise-ambience">
           <feTurbulence
             type="fractalNoise"
             baseFrequency="0.8"
             numOctaves="4"
             stitchTiles="stitch"
           />
-        </filter>
+        </filter> */}
         <rect width="100%" height="100%" fill="white" filter="url(#noise-ambience)" />
       </svg>
     </div>

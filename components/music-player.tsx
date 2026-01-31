@@ -18,7 +18,7 @@ export function MusicPlayer({ player }: { player?: Player }) {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="flex items-center justify-center gap-4 bg-card rounded-2xl p-6 backdrop-blur-sm border border-border/50">
+      <div className="flex items-center justify-center gap-4 bg-transparent rounded-2xl px-10 py-6 ">
         <button
           onClick={() => (isPlaying ? pause() : play())}
           className="p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110"

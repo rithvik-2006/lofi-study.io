@@ -7,17 +7,18 @@ import { SetupScreen } from '@/components/setup-screen';
 import { StudySession } from '@/components/study-session';
 
 const VIDEO_SOURCES = [
-  // '/0_Bedroom_Night_3840x2160.mp4',
+  '/0_Bedroom_Night_3840x2160.mp4',
   '/0_Cityscape_City_3840x2160.mp4',
   '/0_Girl_City_3840x2160.mp4',
-  '/6913345_Motion_Graphics_Motion_Graphic_3840x2160.mp4',
-  '/6913962_Motion_Graphics_Motion_Graphic_3840x2160.mp4',
-  '/6916623_Motion_Graphics_Motion_Graphic_3840x2160.mp4',
+  '/bgvid-4.mp4',
+  '/bgvid-5.mp4',
+  '/bgvid-6.mp4',
 ];
 
 export default function Home() {
   const [sessionStarted, setSessionStarted] = useState(false);
   const [sessionMinutes, setSessionMinutes] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [slot0Index, setSlot0Index] = useState(0);
   const [slot1Index, setSlot1Index] = useState(1);
   const [visibleSlot, setVisibleSlot] = useState<0 | 1>(0);
@@ -35,26 +36,29 @@ export default function Home() {
 
   const cycleVideo = useCallback(() => {
     if (isTransitioning) return;
-    const n = VIDEO_SOURCES.length;
-    const currentVisible = visibleSlot;
-    const hiddenSlot = currentVisible; // slot we're fading out
-    const nextVisible = 1 - currentVisible;
-    const visibleIndex =
-      nextVisible === 0 ? slot0Index : slot1Index; // slot we're fading in
-    const nextIndex = (visibleIndex + 1) % n;
 
     setIsTransitioning(true);
-    setVisibleSlot(nextVisible as 0 | 1);
 
-    const t = setTimeout(() => {
-      if (hiddenSlot === 0) setSlot0Index(nextIndex);
-      else setSlot1Index(nextIndex);
+    const n = VIDEO_SOURCES.length;
+    const nextIndex = (currentIndex + 1) % n;
+    const nextSlot: 0 | 1 = visibleSlot === 0 ? 1 : 0;
+
+    // Load next video into hidden slot
+    if (nextSlot === 0) {
+      setSlot0Index(nextIndex);
+    } else {
+      setSlot1Index(nextIndex);
+    }
+
+    // Trigger crossfade
+    setVisibleSlot(nextSlot);
+
+    // Commit the global index AFTER transition
+    setTimeout(() => {
+      setCurrentIndex(nextIndex);
       setIsTransitioning(false);
-    }, 1000);
-
-    return () => clearTimeout(t);
-  }, [isTransitioning, visibleSlot, slot0Index, slot1Index]);
-
+    }, 1000); // must match CSS fade duration
+  }, [currentIndex, visibleSlot, isTransitioning]);
   return (
     <main className="min-h-screen overflow-hidden bg-transparent">
       <Background

@@ -6,7 +6,7 @@ import { TimerDisplay } from './timer-display';
 import { MusicPlayer } from './music-player';
 import { SessionControls } from './session-controls';
 import type { Mode } from '@/hooks/useLofiPlayer';
-
+import { MonitorPlay } from 'lucide-react';
 type Player = {
   play: () => Promise<void>;
   pause: () => void;
@@ -54,7 +54,7 @@ export function StudySession({
         } else {
           // Timer finished
           setIsRunning(false);
-          
+
           if (!isBreak) {
             // Switch to break
             setIsBreak(true);
@@ -98,12 +98,12 @@ export function StudySession({
   const pulseSpeed = isFocus ? 4 : 1.5; // Slower for focus, faster for break
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center p-4 bg-transparent transition-all"
       style={{ transitionDuration: `${transitionDuration}ms` }}
     >
       {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
           className={`absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl ${isBreak ? 'bg-blue-400' : 'bg-orange-300'} transition-all`}
           style={{ 
@@ -121,7 +121,7 @@ export function StudySession({
             animationDelay: '1s'
           }}
         />
-      </div>
+      </div> */}
 
       <div className="relative z-10 w-full max-w-2xl space-y-12">
         {/* Main Timer */}
@@ -146,27 +146,38 @@ export function StudySession({
 
         {/* Controls */}
         <div className="flex justify-center gap-4">
-          <SessionControls 
+          <SessionControls
             isRunning={isRunning}
             onToggle={() => setIsRunning(!isRunning)}
           />
-          
+
           {/* Fullscreen button */}
           <button
             onClick={toggleFullscreen}
-            className="p-3 rounded-full bg-card border border-border hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground"
+            className="p-3 rounded-full bg-primary/10 border border-border hover:bg-primary/20 transition-all duration-300 text-muted-foreground hover:text-foreground"
           >
-            {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+            {isFullscreen ? <Minimize2 size={20} className='text-orange-400' /> : <Maximize2 size={20} className='text-orange-400' />}
           </button>
 
           {/* Background change button */}
-          {onCycleBackground && (
+          {/* {onCycleBackground && (
             <button
               onClick={onCycleBackground}
               className="p-3 rounded-full bg-card border border-border hover:bg-muted transition-all duration-300 text-muted-foreground hover:text-foreground"
               title="Change background video"
             >
               <div className="w-5 h-5 rounded-full bg-gradient-to-r from-accent to-primary" />
+            </button>
+          )} */}
+          {onCycleBackground && (
+            <button
+              onClick={onCycleBackground}
+              className="group p-3 rounded-full bg-primary/10 border border-border hover:bg-primary/20 transition-all duration-300 text-muted-foreground hover:text-foreground shadow-sm"
+              title="Change background scene"
+            >
+              <MonitorPlay
+                className="w-5 h-5 text-orange-400"
+              />
             </button>
           )}
         </div>

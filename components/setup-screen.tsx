@@ -30,7 +30,7 @@ export function SetupScreen({ onStart }: { onStart: (minutes: number) => void })
 
       <div className="relative z-10 w-full max-w-md">
         {/* Card */}
-        <div className="bg-card border border-border/50 rounded-3xl p-10 backdrop-blur-sm shadow-2xl">
+        <div className="bg-card rounded-3xl p-10 backdrop-blur-sm">
           {/* Header */}
           <div className="text-center mb-10">
             <h1 className="text-4xl font-light mb-3 text-foreground tracking-tight">
@@ -104,11 +104,10 @@ export function SetupScreen({ onStart }: { onStart: (minutes: number) => void })
               <button
                 key={preset.minutes}
                 onClick={() => handlePreset(preset.minutes)}
-                className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 ${
-                  totalMinutes === preset.minutes
-                    ? 'bg-primary text-primary-foreground shadow-lg'
-                    : 'bg-background/50 border border-border/30 text-foreground hover:bg-background/80'
-                }`}
+                className={`py-3 px-4 rounded-xl font-medium transition-all duration-300 ${totalMinutes === preset.minutes
+                  ? 'bg-primary text-primary-foreground shadow-lg'
+                  : 'bg-background/50 border border-border/30 text-foreground hover:bg-background/80'
+                  }`}
               >
                 {preset.label}
               </button>
