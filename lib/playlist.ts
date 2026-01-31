@@ -7,4 +7,12 @@ export const playlist = [
     title: "River's Edge",
     url: "https://pub-5694317036ce446d829f75a9dd5691db.r2.dev/song2.mp3",
   },
+  {
+    title: "Early Morning",
+    url: "https://pub-5694317036ce446d829f75a9dd5691db.r2.dev/song3.mp3",
+  },
+  {
+    title: "Synth Waves",
+    url: "https://pub-5694317036ce446d829f75a9dd5691db.r2.dev/song4.mp3",
+  }
 ];

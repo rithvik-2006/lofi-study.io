@@ -117,7 +117,7 @@ export function SetupScreen({ onStart }: { onStart: (minutes: number) => void })
           {/* Start Button */}
           <button
             onClick={() => onStart(totalMinutes)}
-            className="w-full py-4 px-6 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 text-lg"
+            className="w-full py-4 px-6 bg-linear-to-r from-primary to-accent text-primary-foreground rounded-xl font-semibold hover:shadow-xl transition-all duration-300 hover:scale-105 text-lg"
           >
             Start Studying
           </button>
